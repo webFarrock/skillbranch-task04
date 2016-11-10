@@ -5,6 +5,12 @@ app.use(cors());
 app.get('/', function(req, res) {
 
     var fullname = req.query.fullname || '';
+
+
+
+    fullname = fullname.replace(/\s+/g, ' ');
+    fullname = fullname.trim();
+    console.log(fullname);
     var arFullname = fullname.split(' ');
 
     var lastName = '';
@@ -13,11 +19,14 @@ app.get('/', function(req, res) {
 
 
     if(arFullname.length > 3 || !fullname || /\d/.test(fullname) || /_/.test(fullname)|| /\//.test(fullname)){
-        res.send('Invalid fullname');
+        result = 'Invalid fullname';
     }else{
 
-        if(arFullname.length)
+        if(arFullname.length){
             lastName = arFullname.pop();
+            lastName = lastName.toLowerCase();
+            lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+        }
 
         if(arFullname.length)
             secondName =  arFullname.pop();
@@ -43,7 +52,7 @@ app.get('/', function(req, res) {
 
 
 
-        result = lastName + name + secondName
+        result = lastName + name.toUpperCase() + secondName.toUpperCase();
     }
 
 
